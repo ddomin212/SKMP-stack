@@ -12,7 +12,7 @@ Since this would require multiple VMS, Lambda and RDB to run, I just chose to do
     * Import "superset_dashboard.zip". A new dashboard with the name "Weather Dashboard" should appear.
     * Click on the dashboard, and you should see the data right away if everything is set up correctly.
 3. Using Streamlit
-    * Go to (localhost:8501)[http://localhost:8501]
+    * Go to [localhost:8501](http://localhost:8501)
     * See dashboard, live life.
 ### Takeaways
 Open-source proves itself once again, Superset is good, but the functionality is not on par with likes of PowerBI or Tableau (although Tableau looks like it's a Windows 7 app).
