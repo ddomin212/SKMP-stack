@@ -1,6 +1,6 @@
 spark_processing.py
 /ksenv
-.env
+kafka_producer/.env
 **/__pycache__/
 **/*.log
 **/*.pyc

@@ -1,9 +1,13 @@
 import json
 import logging
+import os
 
 import mysql.connector
+from dotenv import load_dotenv
 from kafka import KafkaConsumer
 from kafka.errors import KafkaError
+
+load_dotenv()
 
 KAFKA_SERVER = "kafka1:19092"
 KAFKA_TOPIC = "test-topic"
@@ -30,10 +34,10 @@ def insert_to_db(json_data):
     """
     conn = mysql.connector.connect(
         host="host.docker.internal",
-        port=3306,
+        port=os.getenv("MYSQL_PORT"),
         database="weather",
-        user="dbadmin",
-        password="123",
+        user=os.getenv("MYSQL_USER"),
+        password=os.getenv("MYSQL_PASSWORD"),
     )
     sql = "INSERT INTO data (CityName, Temperature, Humidity, CreationTime) VALUES (%s, %s, %s, %s)"
     cursor = conn.cursor()

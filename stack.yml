@@ -44,11 +44,9 @@ services:
       timeout: 0s
 
   kafka-producer:
-    image: kafka-producer
+    image: dikis55/kafka-producer
     hostname: kafka-producer
     container_name: kafka-producer
-    ports:
-      - "8501:8501"
     depends_on:
       kafka1:
         condition: service_healthy
@@ -71,13 +69,23 @@ services:
       - ./mysql:/docker-entrypoint-initdb.d/:ro
       - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
     command: --default-authentication-plugin=mysql_native_password
-  
+
   kafka-conusmer:
-    image: kafka-consumer
+    image: dikis55/kafka-consumer
     hostname: kafka-conusmer
     container_name: kafka-conusmer
+    depends_on:
+      kafka1:
+        condition: service_healthy
+
+  streamlit_viz:
+    image: dikis55/streamlit_viz
+    hostname: streamlit_viz
+    container_name: streamlit_viz
     ports:
-      - "5000:5000"
+      - "8501:8501"
+    expose:
+      - "8501"
     depends_on:
       kafka1:
         condition: service_healthy
