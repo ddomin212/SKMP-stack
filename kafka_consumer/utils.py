@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+from typing import Any
 
 import mysql.connector
 from dotenv import load_dotenv
@@ -13,7 +14,7 @@ KAFKA_SERVER = "kafka1:19092"
 KAFKA_TOPIC = "test-topic"
 
 
-def init_consumer():
+def init_consumer() -> KafkaConsumer:
     """
     Create Kafka consumer
     :return: Kafka consumer object
@@ -26,7 +27,7 @@ def init_consumer():
         exit(1)
 
 
-def insert_to_db(json_data):
+def insert_to_db(json_data: dict[str, str | int | float]):
     """
     Insert data to MySQL database
     :param json_data: JSON data
@@ -40,18 +41,15 @@ def insert_to_db(json_data):
         password=os.getenv("MYSQL_PASSWORD"),
     )
     sql = "INSERT INTO data (CityName, Temperature, Humidity, CreationTime) VALUES (%s, %s, %s, %s)"
+
     cursor = conn.cursor()
     cursor.execute(sql, list(json_data.values()))
-
-    # Commit the transaction (if applicable)
     conn.commit()
-
-    # Close the database connection
     cursor.close()
     conn.close()
 
 
-def decode_message(message):
+def decode_message(message: bytes) -> dict[str, str | int | float]:
     """
     Decode message from Kafka consumer
     :param message: Kafka message

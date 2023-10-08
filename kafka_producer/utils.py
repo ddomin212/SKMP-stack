@@ -11,7 +11,7 @@ KAFKA_SERVER = "kafka1:19092"
 KAFKA_TOPIC = "test-topic"
 
 
-def init_producer():
+def init_producer() -> KafkaProducer:
     """
     Create Kafka producer
     :return: Kafka producer object
@@ -27,7 +27,7 @@ def init_producer():
         exit(1)
 
 
-def get_weather_detail(city_name):
+def get_weather_detail(city_name: str) -> dict[str, str | int | float]:
     """
     Get weather detail from OpenWeatherMap API
     :param city_name: City name
@@ -41,7 +41,7 @@ def get_weather_detail(city_name):
     )
     api_response = requests.get(weather_url, timeout=10)
     json_data = api_response.json()
-    city_name = json_data["name"]
+    print(json_data)
     temperature = json_data["main"]["temp"]
     humidity = json_data["main"]["humidity"]
     json_message = {

@@ -7,8 +7,6 @@ from utils import KAFKA_TOPIC, get_weather_detail, init_producer
 
 load_dotenv()
 
-print(os.getenv("CITIES"))
-
 logging.basicConfig(
     filename="example.log", encoding="utf-8", level=logging.WARNING
 )
